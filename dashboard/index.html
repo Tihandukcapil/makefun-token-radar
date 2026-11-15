@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — protocols with no token yet, ranked by launch value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">◉</div>
+    <div>
+      <h1>TOKEN RADAR</h1>
+      <p class="tag">Every protocol with no token yet — ranked by what its launch would be worth.</p>
+    </div>
+  </div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<main>
+  <section class="method" id="method">
+    <h2>How a launch is valued</h2>
+    <p class="formula">implied value = TVL × category multiple × growth × maturity × breadth</p>
+    <p>The multiple is not a guess: it is the live market's own median market-cap-per-dollar-of-TVL for that
+    category, read out of this snapshot's protocols that already trade. A category with fewer than five live
+    protocols falls back to the whole market's median. Growth is the protocol's own seven-day TVL change,
+    clamped to −60%…+120% and weighted by one half. Maturity is how long it has run with no token
+    (0.60 at day zero, rising to 1.00 at three years). Breadth adds 5% per extra chain, up to four.
+    No protocol name is ever special-cased — the same function scores every row.</p>
+    <p class="note">An implied value is this radar's own claim, never a promise: it says what a token would be
+    worth if the protocol's record stayed as it is. It does not predict whether or when a token is issued.
+    A protocol is shown as recording no token when its DefiLlama record carries none — the record is not
+    proof, and it may still hold one.</p>
+    <div class="calib" id="calib"></div>
+  </section>
+
+  <section class="controls">
+    <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search protocols">
+    <select id="cat" aria-label="Filter by category"><option value="">All categories</option></select>
+    <select id="chain" aria-label="Filter by chain"><option value="">All chains</option></select>
+    <select id="sort" aria-label="Sort board">
+      <option value="value">Sort: implied value</option>
+      <option value="tvl">Sort: TVL</option>
+      <option value="growth">Sort: 7-day change</option>
+      <option value="age">Sort: age</option>
+    </select>
+    <label class="check"><input id="watch" type="checkbox"> Watchlist only</label>
+    <button id="liveBtn" type="button">Already trading ▾</button>
+  </section>
+
+  <section class="detail hidden" id="detail" aria-live="polite"></section>
+
+  <section class="live hidden" id="live"></section>
+
+  <section class="board">
+    <div class="boardhead"><span id="count"></span><span id="asof"></span></div>
+    <table>
+      <thead><tr>
+        <th>#</th><th>Protocol</th><th>Category</th><th>Chains</th>
+        <th class="num">TVL</th><th class="num">7d</th><th class="num">Age</th><th class="num">Implied value</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty hidden" id="empty">Nothing matches these filters.</p>
+  </section>
+
+  <footer>
+    <p>Source: DefiLlama protocols snapshot, fetched once and sealed — <span id="src"></span>.
+    The board ranks launch candidates only; protocols whose token already trades are shown separately,
+    at the market's own values, never mixed into the ranking. Model radar-2.</p>
+  </footer>
+</main>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
